@@ -39,28 +39,7 @@ services:
     command: /bin/sh -c "nginx -g 'daemon off;'"
     depends_on:
       - php
-  # per far funzionare questo container, creare in  /docker/nginx/html/ il file default.conf modificando il
-  # path in cui si trova index.html per il test.
-  #  nginx_html:
-  #    image: nginx:alpine
-  #    container_name: ${CONTAINER_NAME_HTML}-nginx-container-dev
-  #    restart: no
-  #    networks:
-  #      - traefik
-  #    labels:
-  #      - "traefik.enable=true"
-  #      - "traefik.docker.network=traefik"
-  #      - "traefik.http.routers.nginx-${CONTAINER_NAME_HTML}.entrypoints=websecure"
-  #      - "traefik.http.routers.nginx-${CONTAINER_NAME_HTML}.tls=true"
-  #      - "traefik.http.routers.nginx-${CONTAINER_NAME_HTML}.rule=(Host(`${SITE_URL_HTML}`))"
-  #      - "traefik.http.middlewares.nginx-${CONTAINER_NAME_HTML}.redirectscheme.scheme=https"
-  #      - "traefik.http.services.nginx-${CONTAINER_NAME_HTML}.loadbalancer.server.port=80"
-  #    volumes:
-  #      - ./docker/nginx/html/default.conf:/etc/nginx/conf.d/default.conf
-  #      - ./:/var/www/html/
-  #    environment:
-  #      - NGINX_HOST=${NGINX_HOST}
-  #    command: /bin/sh -c "nginx -g 'daemon off;'"
+
   php:
     image: ${CONTAINER_NAME}-php-82-dev
     container_name: ${CONTAINER_NAME}-php-container-dev
