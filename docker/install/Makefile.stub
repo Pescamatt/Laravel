@@ -1,0 +1,25 @@
+help:
+	@echo ""
+	@echo "usage: make COMMAND"
+	@echo ""
+	@echo "Commands:"
+	@echo "  start	      				Start application"
+	@echo "  stop	      				Stop application"
+	@echo "  connect	      			Connect to php container"
+	@echo "  generate-traefik-cert	  		Generate traefik development certificate"
+	@echo "  logs	  	  			Follog container logs"
+
+start:
+	docker compose --env-file ./.env.docker -f docker-compose-dev.yml up -d
+
+stop:
+	docker compose --env-file ./.env.docker -f docker-compose-dev.yml down
+
+connect:
+	docker exec -it ${CONTAINER_NAME}-CONNECT_TO-container-dev bash
+
+generate-traefik-cert:
+	docker run --rm -v $(shell pwd)/docker/development/ssl:/certificates -e "SERVER=localhost" -e "SUBJECT=/C=CA/ST=Canada/L=Canada/O=IT" jacoelho/generate-certificate
+
+logs:
+	docker compose logs -f

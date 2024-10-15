@@ -1,0 +1,24 @@
+## traefik.yml
+
+# Docker configuration backend
+providers:
+  docker:
+    exposedByDefault: true
+    watch: true
+  file:
+    fileName: /etc/traefik/rules.yml
+    watch: true
+
+# API and dashboard configuration
+api:
+  insecure: true
+
+## Static configuration
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+log:
+  level: DEBUG

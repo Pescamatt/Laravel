@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  vite_press:
+    image: node:20
+    container_name: ${CONTAINER_NAME}-CONNECT_TO-container-dev
+    restart: always
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    tty: true
+    networks:
+      - traefik
+

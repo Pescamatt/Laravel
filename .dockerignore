@@ -1,0 +1,33 @@
+### Laravel template
+.git/
+vendor/
+node_modules
+public/build
+node_modules
+storage/app/ans
+storage/app/asn
+storage/app/orders
+storage/app/orders_confirmations
+storage/app/uploaded_orders
+storage/tmp
+storage/debugbar
+
+# Laravel 4 specific
+bootstrap/compiled.php
+
+# Laravel 5 & Lumen specific
+public/storage
+public/hot
+
+# Laravel 5 & Lumen specific with changed public path
+public_html/storage
+public_html/hot
+
+#storage/*.key
+Homestead.yaml
+Homestead.json
+.env
+.vagrant
+.phpunit.result.cache
+
+*.log

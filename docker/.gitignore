@@ -1,0 +1,9 @@
+# Global
+.*.swp
+.DS_Store
+
+.idea
+
+development/ssl
+development/php/docker-php-ext-xdebug.ini
+development/php/docker-php-upload.ini

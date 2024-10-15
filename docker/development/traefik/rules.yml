@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: "/etc/certs/server.pem"
+      keyFile: "/etc/certs/server.key"

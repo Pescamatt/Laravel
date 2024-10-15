@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mailpit:
+    image: axllent/mailpit
+    container_name: ${CONTAINER_NAME}-mailpit-container-dev
+    networks:
+      - traefik
+      - laravel
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.mailpit-${CONTAINER_NAME}.entrypoints=web"
+      - "traefik.http.routers.mailpit-${CONTAINER_NAME}.rule=(Host(`localhost`) && PathPrefix(`/mailpit`))"
+      - "traefik.http.routers.mailpit-${CONTAINER_NAME}.middlewares=mailpit-${CONTAINER_NAME}_pathstrip"
+      - "traefik.http.middlewares.mailpit-${CONTAINER_NAME}_pathstrip.stripprefix.prefixes=/mailpit"
+      - "traefik.http.services.mailpit-${CONTAINER_NAME}.loadbalancer.server.port=8025"

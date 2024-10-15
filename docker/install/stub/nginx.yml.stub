@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: ${CONTAINER_NAME}-nginx-container-dev
+    volumes:
+      - ./docker/nginx/NGINX_DIR/default.conf:/etc/nginx/conf.d/default.conf
+      - ./:/var/www/html/
+    environment:
+      - NGINX_HOST=${NGINX_HOST}
+    command: /bin/sh -c "nginx -g 'daemon off;'"
+    restart: always
+    networks:
+      - traefik
+    depends_on:
+      - DEPENDS_ON_SERVICE
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.nginx-${CONTAINER_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.nginx-${CONTAINER_NAME}.tls=true"
+      - "traefik.http.routers.nginx-${CONTAINER_NAME}.rule=(Host(`${SITE_URL}`))"
+      - "traefik.http.middlewares.nginx-${CONTAINER_NAME}.redirectscheme.scheme=https"
+      - "traefik.http.services.nginx-${CONTAINER_NAME}.loadbalancer.server.port=80"
+

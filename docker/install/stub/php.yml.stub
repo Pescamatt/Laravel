@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  php:
+    image: ${CONTAINER_NAME}-php-82-dev
+    container_name: ${CONTAINER_NAME}-CONNECT_TO-container-dev
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./docker/development/php/Dockerfile
+    ports:
+        - "8080:8080"
+        - "8081:8081"
+        - "8082:8082"
+    volumes:
+      - ./docker/development/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:rw
+      - ./docker/development/php/docker-php-upload.ini:/usr/local/etc/php/conf.d/docker-php-upload.ini:rw
+      - ./:/var/www/html/
+    networks:
+      - laravel
+      - traefik
+    labels:
+      - "traefik.enable=false"
+    links:

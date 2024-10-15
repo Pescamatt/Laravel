@@ -1,0 +1,31 @@
+; PHP Configuration
+
+;[Date]
+; Defines the default timezone used by the date functions
+; http://php.net/date.timezone
+;date.timezone =
+
+; Error handling
+;display_errors = Off
+
+; Xdebug
+; See https://xdebug.org/docs/all_settings
+
+;PHPStorm
+[Xdebug]
+zend_extension=xdebug
+
+xdebug.client_port=9003
+
+; The Linux way
+xdebug.discover_client_host=true
+
+; idekey value is specific to PhpStorm
+xdebug.idekey=PHPSTORM
+xdebug.mode=coverage,debug
+
+xdebug.start_with_request=yes
+xdebug.log = /tmp/xdebug.log
+error_log = /tmp/php_error.log
+
+xdebug.client_host=${HOSTNAME}.local

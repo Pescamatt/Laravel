@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  greenmail:
+    image: greenmail/standalone
+    container_name: ${CONTAINER_NAME}-greenmail-container-dev
+    environment:
+      - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.verbose -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.users=localreceiver:pwdlocalreceiver@localhost.com,localsender:pwdlocalsender@localhost.com
+    networks:
+      - traefik
+      - laravel
+    ports:
+      - "3025:3025" # SMTP
+      - "3110:3110" # POP3
+      - "3143:3143" # IMAP
+      - "3465:3465" # SMTPS
+      - "3993:3993" # IMAPS
+      - "3995:3995" # POP3S
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.greenmail-${CONTAINER_NAME}.entrypoints=web"
+      - "traefik.http.routers.greenmail-${CONTAINER_NAME}.rule=(Host(`localhost`) && PathPrefix(`/greenmail`))"
+      - "traefik.http.routers.greenmail-${CONTAINER_NAME}.middlewares=greenmail-${CONTAINER_NAME}_pathstrip"
+      - "traefik.http.middlewares.greenmail-${CONTAINER_NAME}_pathstrip.stripprefix.prefixes=/greenmail"
+      - "traefik.http.services.greenmail-${CONTAINER_NAME}.loadbalancer.server.port=8080"
+

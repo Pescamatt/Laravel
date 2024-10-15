@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  mariadb:
+    image: mariadb:10.4.22
+    container_name: mariadb-dev
+    restart: always
+    environment:
+      - MARIADB_DATABASE=test
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_USER=dev
+      - MARIADB_PASSWORD=dev
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - laravel
+    labels:
+      - "traefik.enable=false"
+
+volumes:
+  mariadb_data:

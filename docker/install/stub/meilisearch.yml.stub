@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: ${CONTAINER_NAME}-meilisearch-container-dev
+    volumes:
+      - ./docker/development/meilisearch/config.toml:/config.toml:rw
+      -  data.ms:/data.ms
+    networks:
+      - laravel
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.meilisearch-${CONTAINER_NAME}.entrypoints=web"
+      - "traefik.http.routers.meilisearch-${CONTAINER_NAME}.rule=(Host(`ms.localhost`))"
+      - "traefik.http.services.meilisearch-${CONTAINER_NAME}.loadbalancer.server.port=7700"
+
+volumes:
+  data.ms:

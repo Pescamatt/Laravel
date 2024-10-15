@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mailhog:
+    image: mailhog/mailhog
+    container_name: ${CONTAINER_NAME}-mailhog-container-dev
+    networks:
+      - traefik
+      - laravel
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.mailhog-${CONTAINER_NAME}.entrypoints=web"
+      - "traefik.http.routers.mailhog-${CONTAINER_NAME}.rule=(Host(`localhost`) && PathPrefix(`/mailhog`))"
+      - "traefik.http.routers.mailhog-${CONTAINER_NAME}.middlewares=mailhog-${CONTAINER_NAME}_pathstrip"
+      - "traefik.http.middlewares.mailhog-${CONTAINER_NAME}_pathstrip.stripprefix.prefixes=/mailhog"
+      - "traefik.http.services.mailhog-${CONTAINER_NAME}.loadbalancer.server.port=8025"
